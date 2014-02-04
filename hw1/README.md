@@ -9,10 +9,8 @@ Guassian Blur
 -------------
 sigma = 1
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_1.png)
-
 sigma = 2
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_2.png)
-
 sigma = 3
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_3.png)
 
