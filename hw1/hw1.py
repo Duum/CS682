@@ -18,7 +18,7 @@ def img_derivative(image, x, y, filename):
 	if y == 1:
 		kernel[0,1] = 0.5
 		kernel[2,1] = -0.5
-	dst = cv2.filter2D(gray_image, -1, kernel)*4
+	dst = cv2.filter2D(gray_image, -1, kernel)*8 + 128
 	cv2.imwrite(filename + '_d_' + str(x) + '_'  + str(y) + '.png', dst)
 	return dst;
 
