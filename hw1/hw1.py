@@ -10,6 +10,7 @@ def gaussian_blur(sigma):
 	return blur
 
 def img_derivative(image, x, y, filename):
+	gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	kernel = np.zeros((3,3), np.float32);
 	if x == 1:
 		kernel[1,0] = 0.5
@@ -17,7 +18,7 @@ def img_derivative(image, x, y, filename):
 	if y == 1:
 		kernel[0,1] = 0.5
 		kernel[2,1] = -0.5
-	dst = cv2.filter2D(image, -1, kernel)*4
+	dst = cv2.filter2D(gray_image, -1, kernel)*4
 	cv2.imwrite(filename + '_d_' + str(x) + '_'  + str(y) + '.png', dst)
 	return dst;
 
