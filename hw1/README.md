@@ -1,5 +1,8 @@
 CS682 HW1
 =========
+
+Zhonghua Xi
+-----------
  
 Original Image
 --------------
@@ -16,6 +19,8 @@ sigma = 3
 
 Image Derivative
 ----------------
+Note: img = img*8 + 128
+
 Original Image
 
 x = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/org_d_1_0.png)
