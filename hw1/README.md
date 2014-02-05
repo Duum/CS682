@@ -3,6 +3,10 @@ CS682 HW1
 
 Zhonghua Xi
 -----------
+
+Code
+--------------
+https://raw2.github.com/xizhonghua/CS682/master/hw1/hw1.py
  
 Original Image
 --------------
@@ -10,11 +14,11 @@ Original Image
 
 Guassian Blur
 -------------
-sigma = 1
+σ = 1
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_1.png)
-sigma = 2
+σ = 2
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_2.png)
-sigma = 3
+σ = 3
 ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gaussion_3.png)
 
 Image Derivative
@@ -26,17 +30,17 @@ Original Image
 x = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/org_d_1_0.png)
 y = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/org_d_0_1.png)
 
-Guassuian Blur Sigma = 1
+Guassuian Blur σ = 1
 
 x = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_1_d_1_0.png)
 y = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_1_d_0_1.png)
 
-Guassuian Blur Sigma = 2
+Guassuian Blur σ = 2
 
 x = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_2_d_1_0.png)
 y = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_2_d_0_1.png)
 
-Guassuian Blur Sigma = 3
+Guassuian Blur σ = 3
 
 x = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_3_d_1_0.png)
 y = ![](https://raw2.github.com/xizhonghua/CS682/master/hw1/gb_3_d_0_1.png)
