@@ -8,13 +8,13 @@ Keypoints
 ---------
 Using SIFT feature detector, features are drawn in random color as circles with radius as its size
 
-![Image](/hw2/results/keypoints1.png?raw=true =360x)
+![Image](/hw2/results/keypoints1.png?raw=true) width=400px height=300px
 
-![Image](/hw2/results/keypoints2.png?raw=true =360x)
+![Image](/hw2/results/keypoints2.png?raw=true) width=400px height=300px
 
-![Image](/hw2/results/keypoints3.png?raw=true =360x) 
+![Image](/hw2/results/keypoints3.png?raw=true) width=400px height=300px
 
-![Image](/hw2/results/keypoints4.png?raw=true =360x)
+![Image](/hw2/results/keypoints4.png?raw=true) width=400px height=300px
 
 Matching
 --------
