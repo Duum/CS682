@@ -6,14 +6,15 @@ Zhonghua Xi
 
 Keypoints
 ---------
-SIFT feature detector used
-![Image](/hw2/results/keypoints1.png?raw=true)
+Using SIFT feature detector, features are drawn in random color as circles with radius as its size
 
-![Image](/hw2/results/keypoints2.png?raw=true)
+![Image](/hw2/results/keypoints1.png?raw=true =360x)
 
-![Image](/hw2/results/keypoints3.png?raw=true) 
+![Image](/hw2/results/keypoints2.png?raw=true =360x)
 
-![Image](/hw2/results/keypoints4.png?raw=true)
+![Image](/hw2/results/keypoints3.png?raw=true =360x) 
+
+![Image](/hw2/results/keypoints4.png?raw=true =360x)
 
 Matching
 --------
@@ -28,6 +29,8 @@ match = zeros()
 scaleFactor = 1.0 / max(matchedKeypoints(i,j).size())
 
 match(i,j) = matchedKeypoints(i,j).size() / min (keypoints(i).size()), keypoints(i).size()) * scaleFactor
+
+match(i,i) = 1.0
 
 ###Results 6x:
 
