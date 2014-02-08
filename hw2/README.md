@@ -21,8 +21,8 @@ Matching using k(k=2) best match with ratio test (75%) based on SIFT feature des
 
 | Result                                            |
 |:-------------------------------------------------:|
-| ![Image](/hw2/results/matching_25_30.jpg?raw=true) |
-| Same scene, # features img1 = 5213, img2 = 5404, # matched = 582 |
+| ![Image](/hw2/results/matching_79_80.jpg?raw=true) |
+| Same scene, # features img1 = 4756, img2 = 5233, # matched = 1077 |
 | ![Image](/hw2/results/matching_78_79.jpg?raw=true) |
 | Different scene, # features img1 = 2370, img2 = 4756, # matched = 35 |
 
