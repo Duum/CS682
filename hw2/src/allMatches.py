@@ -33,6 +33,7 @@ def match(img1_path, img2_path):
     # apply ratio test explained by D.Lowe
     sel_matches = [m for m,n in matches if m.distance < 0.75*n.distance]
     
+    # return a matched score 0 ~ 1
     return float(len(sel_matches)) / min(len(k1), len(k2))    
 
 

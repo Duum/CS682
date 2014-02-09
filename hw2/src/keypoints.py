@@ -21,6 +21,7 @@ sift = cv2.SIFT()
 kp, des = sift.detectAndCompute(img, None)
 
 # visualize result
+# features will be drawn as circles with an orientation and radius as its size in random colors
 view = cv2.drawKeypoints(img, kp, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS);
 
 cv2.namedWindow("SIFT", cv2.cv.CV_WINDOW_NORMAL)

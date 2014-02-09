@@ -35,6 +35,9 @@ matches = matcher.knnMatch(d1, d2, 2)
 
 # keep only the reasonable matches
 # apply ratio test explained by D.Lowe
+# 0.75 can discards many of the false matches
+# if this threshold is too small, no match will be selected
+# and if it's too large, noise will be introduced 
 sel_matches = [m for m,n in matches if m.distance < 0.75*n.distance]
 
 print '#selected matches:', len(sel_matches)
