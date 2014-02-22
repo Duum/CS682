@@ -5,7 +5,7 @@ CS 682 HW #2
 
 Keypoints
 ---------
-Using SIFT feature detector, features are drawn in random colors as circles with radius as its size
+Using SIFT feature detector, since its rotation invriant. Features are drawn in random colors as circles with radius as its size
 
 ![Image](/hw2/results/keypoints1.png?raw=true)
 
@@ -17,7 +17,7 @@ Using SIFT feature detector, features are drawn in random colors as circles with
 
 Matching
 --------
-Matching using k(k=2) best match with ratio test (75%) based on SIFT feature descriptor
+Matching using k(k=2) best match with ratio test (75%) which can throw away a lot of bad matches while remain resonable numbers of matched features. Matching was performed using brute force algorithm based on SIFT feature descriptor.
 
 | Result                                            |
 |:-------------------------------------------------:|
