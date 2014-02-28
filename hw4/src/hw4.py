@@ -313,7 +313,7 @@ def main(img_path):
     
 def Tune(img_path):
     WN = 'Tune'
-    SHOW_CANNY = False
+    SHOW_CANNY = True
     SHOW_HOUGHP = False
     EXTEND_LINES = False
     DRAW_LINES = True
