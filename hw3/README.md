@@ -23,6 +23,6 @@ Edge Orientation
 ---------------
 ![Image](/hw3/results/orientation.png?raw=true)
 
-Non-maxima Suprresion
+Non-maxima Suppression
 ----------------
 ![Image](/hw3/results/nms.png?raw=true)
