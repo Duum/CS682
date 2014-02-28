@@ -17,7 +17,7 @@ CANNY_APERTURE_SIZE = 5
 
 HOUGH_RHO = 1
 HOUGH_THETA = 1             #degree
-HOUGH_TH = 180
+HOUGH_TH = 150
 
 HOUGHP_MIN_LEN = 30
 HOUGHP_MAX_GAP = 5
@@ -50,13 +50,12 @@ def HoughLinesP(img):
     return lines
 
 # estimate vanishing point by minimize the objective fucntion
-def EstimateVanisingPoint(pts):
+def EstimateVanisingPoint(pts, w, h):
     
     if len(pts) == 0:
         return -1,-1
     
-    cx = 0
-    cy = 0
+    cx = cy = 0
     
     for x,y in pts:
         cx += x
@@ -71,7 +70,10 @@ def EstimateVanisingPoint(pts):
     
     dists.sort()
     
-    min_dist = dists[len(dists)/2]
+    # keep the 75% elements
+    n = (int)(len(dists)*0.75)
+    
+    min_dist = dists[n]
     
     temp = []
     
@@ -82,7 +84,10 @@ def EstimateVanisingPoint(pts):
         if dist <= min_dist:
             temp.append(pts[i])
     
+    print "before = %d after = %d" % (len(pts), len(temp))
+    
     pts = temp
+
     
     if len(pts) == 0:
         return -1,-1
@@ -143,7 +148,15 @@ def line(p1, p2):
     return A, B, -C
 
 # find intersection of two lines
-def intersection(L1, L2, w, h):    
+def intersection(L1, L2, w, h):
+    
+    a1 = math.atan(float(L1[0])/L1[1])
+    a2 = math.atan(float(L2[0])/L2[1])
+    
+    # filter out parallel lines
+    if abs(a1-a2) < 10.0 / 180 * 3.14:
+        return False
+    
     D  = L1[0] * L2[1] - L1[1] * L2[0]
     Dx = L1[2] * L2[1] - L1[1] * L2[2]
     Dy = L1[0] * L2[2] - L1[2] * L2[0]
@@ -196,7 +209,7 @@ def drawHoughResult(img, lines, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BES
                 pts.append(inter)
     
     if DRAW_BEST:
-        center = EstimateVanisingPoint(pts)
+        center = EstimateVanisingPoint(pts, w, h)
         cv2.circle(out, center, r, (0,0,255), thickness=4)
     
     return out
@@ -242,7 +255,7 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
                 pts.append(inter)
     
     if DRAW_BEST:
-        center = EstimateVanisingPoint(pts)
+        center = EstimateVanisingPoint(pts,w,h)
         cv2.circle(out, center, r, (0,0,255), thickness=4)
                 
     return out
