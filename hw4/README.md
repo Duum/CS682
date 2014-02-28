@@ -79,6 +79,13 @@ The program provides two ways to use:
 1. Directly mode: ./hw4.py img_path, will output all the images (Canny Edges, Hough, HoughP, vasnishing poitns, etc)
 2. Interative mode: ./hw4.py img_path tune, will give you a UI to play with like below
 
+GUI Keys
+
+* p : toggle between Hough/HoughP
+* l : toggle drawing lines
+* c : toggle drawing vanishing points
+* b : toggle drawing estimated vanishing point
+
 ![Image](/hw4/exp/tune1.jpg?raw=true)
 ![Image](/hw4/exp/tune2.jpg?raw=true)
 
