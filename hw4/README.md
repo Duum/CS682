@@ -72,7 +72,7 @@ Results
 ![Image](/hw4/exp/ST2MainHall4020_edge.jpg?raw=true)
 ![Image](/hw4/exp/ST2MainHall4041_edge.jpg?raw=true)
 ![Image](/hw4/exp/ST2MainHall4054_edge.jpg?raw=true)
-![Image](/hw4/exp/ST2MainHall4080_edge.jpg?raw=true)
+![Image](/hw4/exp/ST2MainHall4086_edge.jpg?raw=true)
 
 ![Image](/hw4/exp/ST2MainHall4017_hough_inter.jpg?raw=true)
 ![Image](/hw4/exp/ST2MainHall4017_houghP_inter.jpg?raw=true)
@@ -86,6 +86,6 @@ Results
 ![Image](/hw4/exp/ST2MainHall4054_hough_inter.jpg?raw=true)
 ![Image](/hw4/exp/ST2MainHall4054_houghP_inter.jpg?raw=true)
 
-![Image](/hw4/exp/ST2MainHall4080_hough_inter.jpg?raw=true)
-![Image](/hw4/exp/ST2MainHall4080_houghP_inter.jpg?raw=true)
+![Image](/hw4/exp/ST2MainHall4086_hough_inter.jpg?raw=true)
+![Image](/hw4/exp/ST2MainHall4086_houghP_inter.jpg?raw=true)
 
