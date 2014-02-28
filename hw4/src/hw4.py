@@ -63,6 +63,8 @@ def EstimateVanisingPoint(pts, w, h):
     cx /= len(pts)
     cy /= len(pts)
     
+    print "COM1 = (%d, %d)" % (cx,cy)
+    
     dists = []
     for x,y in pts:
         dist = (x-cx)**2 + (y-cy)**2
@@ -84,17 +86,12 @@ def EstimateVanisingPoint(pts, w, h):
         if dist <= min_dist:
             temp.append(pts[i])
     
-    print "before = %d after = %d" % (len(pts), len(temp))
     
     pts = temp
 
     
     if len(pts) == 0:
         return -1,-1
-    
-    # print out 5 most close to center points
-    for i in range(0, min(5, len(pts))):
-        print "%d %d,%d" % (i, pts[i][0], pts[i][1])
     
     xs = np.zeros(len(pts))
     ys = np.zeros(len(pts))
@@ -109,6 +106,8 @@ def EstimateVanisingPoint(pts, w, h):
     
     cx /= len(pts)
     cy /= len(pts)
+    
+    print "COM2 = (%d, %d)" % (cx,cy)
     
     # give the optimization a good guess
     p0 =  np.array([cx, cy])
@@ -330,7 +329,7 @@ def main(img_path):
     
 def Tune(img_path):
     WN = 'Tune'
-    SHOW_CANNY = True
+    SHOW_CANNY = False
     SHOW_HOUGHP = False
     EXTEND_LINES = False
     DRAW_LINES = True
