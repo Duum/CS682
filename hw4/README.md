@@ -9,7 +9,7 @@ Edges were found by using Canny Edge Detector
 1. Apply a Gaussian Blur with Sigma = 2 to filter out the noise
 2. Apply Canny Edge Dectector with low threshold=250, high threshold=500
 
-Canny use a hysteresis thresholding. We can get quite decent edges at 250/500 (low threshold is 40%~50% of the high threshold). The higher the thrasholds are, the fewer edges we will be given.
+Canny use a hysteresis thresholding. We can get quite decent edges at 250/500 (low threshold should be 40%~50% of the high threshold). The higher the thrasholds are, the fewer edges we will be given.
 
 |     Edges detected by Canny Edge Detector            |
 |:----------------------------------------------------:|
@@ -17,19 +17,23 @@ Canny use a hysteresis thresholding. We can get quite decent edges at 250/500 (l
 
 Line Finding
 ------------
+Lines are found by Hough Transform and Probablistic Hough Transform with below peremter settings
 
-1. Hough Transform
-2. Probablistic Hough Transform
-3. Peremters
-   1. rho = 1
-   2. theta = 1 degree
-   3. threshold = 150
-   4. min_len = 30, HoughP only
-   5. max_gap = 5, HoughP only
+| Parameter | Value | Description  |
+|:---------:|:-----:| ------------ |
+| rho       |     1 | distance resolution of the accumulator in pixels, bigger one returns more lines |
+| theta     | 1 deg | angle resolution of the accumulator, smaller one returns more lines |
+| threshold |   150 | control the number of returned lines, should be big enough to filter out low votes lines |
+| min_len   |    30 | HoughP only, minimum length required for a line, larger ones can fiter out noise |
+| max_gap   |     5 | HoughP only, maximum gap allowed for a line, smaller ones can filter out noise |
+
 
 Lines shows in green were found by Hough Transform, light blue ones were found by Probablistic Hough Transform. Nearly vertical or horizontal lines are shown in orange in both algorithms.
 
 Compared to Hough, HoughP can directly tell where the lines start and where they end. And by providing minimum-length of the line and maximum gap, HoughP could be more rubost than Hough.
+
+
+
 
 | Hough Transform |
 |:---------------:|
@@ -49,29 +53,25 @@ Compared to Hough, HoughP can directly tell where the lines start and where they
 
 Vanishing Points
 ----------------
-"Vanishing point" is found by intersecting all potecial lines (where vertical and horitonzal lines will not be taken into concideration) which should be intersected at the same position: the vanishing point. However, in the real world case, multiple vanishing points will be calculated from one image. The way I used to estimate the real vanishing point is as follow:
+"Vanishing point" is found by intersecting all potential lines (where vertical and horitonzal lines will not be taken into concideration). All potencial lines should be intersected at the same position: the vanishing point. However, in the real world case, multiple vanishing points will be calculated from one image. The way I used to estimate the real vanishing point is as follow:
 
-1. Compute the COM of all "vanishing points"
-2. For each "vasning point", compute the distance from it to COM
+1. Compute the center of mess of all intersection points as COM1
+2. For each intersection point, compute its distance from to COM1
 3. Filter out bad points whose distance > threshold distance ( 25% thrown )
-4. Re-compute the COM of good points as initial guess for optimization
+4. Re-compute the center of mess of good points as COM2 for optimization as an initial guess
 5. Apply optimization method to find optimal vanishing point v by minimizing the Σ||v-v<sub>i</sub>||<sup>2</sup>
 
 Finally, the estimated vanishing point is shown in red in both algorithms.
 
-![Image](/hw4/exp/ST2MainHall4041_hough_inter.jpg?raw=true)
-Vanishing points found by using Hough
+| Vanishing points found by using Hough |
+|:-------------------------------------:|
+| ![Image](/hw4/exp/ST2MainHall4041_hough_inter.jpg?raw=true) |
+| COM1 = (746, 581) COM2 = (734, 592) Vanishing Point = (729,588) |
 
-COM1 = (746, 581)
-COM2 = (734, 592)
-Vanishing Point = (729,588)
-
-![Image](/hw4/exp/ST2MainHall4041_houghP_inter.jpg?raw=true)
-Vanishing points found by using HoughP
-
-COM1 = (750, 579)
-COM2 = (746, 592)
-Vanishing Point = (738,586)
+| Vanishing points found by using HoughP |
+|:-------------------------------------:|
+| ![Image](/hw4/exp/ST2MainHall4041_houghP_inter.jpg?raw=true) |
+| COM1 = (750, 579) COM2 = (746, 592) Vanishing Point = (738,586) |
 
 Code ans Usage
 --------------
@@ -89,7 +89,10 @@ This code provide two ways to use:
 Results
 -------
 
-NOTE: All the images below use the same parameters metioned above. However, the parameters should be tuned for each image seperately.
+NOTE: 
+
+1. All the images below use the same parameters metioned above. However, the parameters should be tuned for each image seperately in practice.
+2. All the operations are done is full resultion (1600*1200), results are shown in 800*600
 
 | 4017 |
 |:----:|
