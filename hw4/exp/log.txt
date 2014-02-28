@@ -1,0 +1,88 @@
+saved edges to ST2MainHall4017_edge.jpg
+saved hough to ST2MainHall4017_hough.jpg
+saved houghP to ST2MainHall4017_houghP.jpg
+saved houghP to ST2MainHall4017_houghP_ext.jpg
+0 786,591
+1 786,600
+2 777,595
+Vanishing Point = (783,595)
+saved hough to ST2MainHall4017_hough_inter.jpg
+0 748,578
+1 781,594
+2 781,594
+3 783,598
+4 779,595
+Vanishing Point = (728,618)
+saved houghP to ST2MainHall4017_houghP_inter.jpg
+saved edges to ST2MainHall4020_edge.jpg
+saved hough to ST2MainHall4020_hough.jpg
+saved houghP to ST2MainHall4020_houghP.jpg
+saved houghP to ST2MainHall4020_houghP_ext.jpg
+0 778,615
+1 826,589
+2 820,593
+3 820,593
+4 819,593
+Vanishing Point = (817,588)
+saved hough to ST2MainHall4020_hough_inter.jpg
+0 814,598
+1 822,593
+2 827,591
+3 821,594
+4 822,594
+Vanishing Point = (815,591)
+saved houghP to ST2MainHall4020_houghP_inter.jpg
+saved edges to ST2MainHall4041_edge.jpg
+saved hough to ST2MainHall4041_hough.jpg
+saved houghP to ST2MainHall4041_houghP.jpg
+saved houghP to ST2MainHall4041_houghP_ext.jpg
+0 785,546
+1 734,587
+2 731,589
+3 731,590
+4 791,541
+Vanishing Point = (742,579)
+saved hough to ST2MainHall4041_hough_inter.jpg
+0 783,544
+1 729,588
+2 728,588
+3 726,590
+4 785,546
+Vanishing Point = (736,584)
+saved houghP to ST2MainHall4041_houghP_inter.jpg
+saved edges to ST2MainHall4054_edge.jpg
+saved hough to ST2MainHall4054_hough.jpg
+saved houghP to ST2MainHall4054_houghP.jpg
+saved houghP to ST2MainHall4054_houghP_ext.jpg
+0 779,609
+1 766,601
+2 778,606
+3 778,606
+4 769,600
+Vanishing Point = (773,603)
+saved hough to ST2MainHall4054_hough_inter.jpg
+0 791,616
+1 791,616
+2 777,608
+3 790,615
+4 791,616
+Vanishing Point = (785,612)
+saved houghP to ST2MainHall4054_houghP_inter.jpg
+saved edges to ST2MainHall4080_edge.jpg
+saved hough to ST2MainHall4080_hough.jpg
+saved houghP to ST2MainHall4080_houghP.jpg
+saved houghP to ST2MainHall4080_houghP_ext.jpg
+0 821,628
+1 828,631
+2 780,610
+3 790,614
+4 786,612
+Vanishing Point = (800,604)
+saved hough to ST2MainHall4080_hough_inter.jpg
+0 822,627
+1 787,612
+2 793,615
+3 790,613
+4 789,613
+Vanishing Point = (788,612)
+saved houghP to ST2MainHall4080_houghP_inter.jpg

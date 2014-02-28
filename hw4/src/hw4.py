@@ -10,9 +10,9 @@ import scipy as sp
 import numpy as np
 from scipy.optimize import minimize
 
-CANNY_TH1 = 125
-CANNY_TH2 = 250
-CANNY_GB_SIGMA = 3
+CANNY_TH1 = 250
+CANNY_TH2 = 500
+CANNY_GB_SIGMA = 2
 CANNY_APERTURE_SIZE = 5
 
 HOUGH_RHO = 1
@@ -86,6 +86,10 @@ def EstimateVanisingPoint(pts):
     
     if len(pts) == 0:
         return -1,-1
+    
+    # print out 5 most close to center points
+    for i in range(0, min(5, len(pts))):
+        print "%d %d,%d" % (i, pts[i][0], pts[i][1])
     
     xs = np.zeros(len(pts))
     ys = np.zeros(len(pts))
