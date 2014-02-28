@@ -49,7 +49,7 @@ def HoughLinesP(img):
     lines = cv2.HoughLinesP(img,rho,theta,threshold,minLineLength = min_len, maxLineGap = max_gap)
     return lines
 
-# estimate vanishing point by minimize the objective fucntion
+# estimate vanishing point from a list of points by minimize the error
 def EstimateVanisingPoint(pts, w, h):
     
     if len(pts) == 0:
@@ -57,6 +57,7 @@ def EstimateVanisingPoint(pts, w, h):
     
     cx = cy = 0
     
+    # compute COM1
     for x,y in pts:
         cx += x
         cy += y
@@ -96,6 +97,7 @@ def EstimateVanisingPoint(pts, w, h):
     xs = np.zeros(len(pts))
     ys = np.zeros(len(pts))
     
+    # compute COM2
     index = 0
     for x,y in pts:
         xs[index] = x
@@ -119,6 +121,7 @@ def EstimateVanisingPoint(pts, w, h):
             sum += (x-p[0])**2 + (y-p[1])**2
         return sum
     
+    # optimize
     result = minimize(obj, p0, method='nelder-mead', options={'xtol': 1e-8, 'disp': False})
     
     p_best = result.x
@@ -128,7 +131,6 @@ def EstimateVanisingPoint(pts, w, h):
     print "Vanishing Point = (%d,%d)" % (vp[0], vp[1])
     
     return vp
-    
 
 # define a potencial line
 def line(p1, p2):
@@ -152,7 +154,7 @@ def intersection(L1, L2, w, h):
     a1 = math.atan(float(L1[0])/L1[1])
     a2 = math.atan(float(L2[0])/L2[1])
     
-    # filter out parallel lines
+    # filter out nearly parallel lines, < 10 degrees
     if abs(a1-a2) < 10.0 / 180 * 3.14:
         return False
     
@@ -167,17 +169,31 @@ def intersection(L1, L2, w, h):
         return int(x),int(y)
     else:
         return False
-    
+
+# find pairwise intersections
+def FindIntersections(lines, w, h):
+    pts = []
+    # do pair wise intersection
+    for i in range(0, len(lines)):
+        for j in range(i+1, len(lines)):
+            inter = intersection(lines[i], lines[j], w, h)
+            if inter: pts.append(inter)
+    return pts;
+
+# draw Hough Transform result
 def drawHoughResult(img, lines, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BEST = True):
     out = img.copy()
     h, w = img.shape[:2]
     
-    #compute the maximum length of the line
+    # compute the maximum length of a line to cover the image
     max_len = math.sqrt(h*h + w*w)
+    
+    # radius of the circle
     r = int(max_len * 0.01)
     
     ls = []
     
+    # loop all lines
     for rho,theta in lines[0]:
         a = np.cos(theta)
         b = np.sin(theta)
@@ -198,14 +214,11 @@ def drawHoughResult(img, lines, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BES
             if l: cv2.line(out,(x1,y1),(x2,y2),(0,255,0), 2)
             else: cv2.line(out,(x1,y1),(x2,y2),(0,100,255), 2)
         
-    pts = []
+    pts = FindIntersections(ls, w, h)
     
-    for i in range(0, len(ls)):
-        for j in range(i+1, len(ls)):
-            inter = intersection(ls[i], ls[j], w, h)
-            if inter:
-                if DRAW_CIRCLES: cv2.circle(out, inter, r, (0,255,255), thickness=2)
-                pts.append(inter)
+    if DRAW_CIRCLES:
+        for pt in pts:
+            cv2.circle(out, pt, r, (0,255,255), 2)
     
     if DRAW_BEST:
         center = EstimateVanisingPoint(pts, w, h)
@@ -213,6 +226,7 @@ def drawHoughResult(img, lines, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BES
     
     return out
 
+# draw Probabilistic Hough Transform result
 def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BEST = True):
     out = img.copy()
     if lines == None: return out
@@ -244,14 +258,11 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
              if l: cv2.line(out,(x1,y1),(x2,y2),(255,255,0),2)
              else: cv2.line(out,(x1,y1),(x2,y2),(0,100,255),2)
     
-    pts = []
+    pts = FindIntersections(ls, w, h)
     
-    for i in range(0, len(ls)):
-        for j in range(i+1, len(ls)):
-            inter = intersection(ls[i], ls[j], w, h)
-            if inter:
-                if DRAW_CIRCLES: cv2.circle(out, inter, r, (0,255,255), thickness=2)
-                pts.append(inter)
+    if DRAW_CIRCLES:
+        for pt in pts:
+            cv2.circle(out, pt, r, (0,255,255), 2)
     
     if DRAW_BEST:
         center = EstimateVanisingPoint(pts,w,h)
@@ -260,10 +271,12 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
     return out
 
 
+# save image in 50% scale
 def imwrite(path, img, f=0.5):
     out = cv2.resize(img, None, None, f, f, interpolation=cv2.INTER_LANCZOS4)
     cv2.imwrite(path, out)
 
+# main flow
 def main(img_path):
     path, filename = os.path.split(img_path)
     
@@ -383,6 +396,7 @@ def Tune(img_path):
         grey_blur = cv2.GaussianBlur(grey, (0,0), sigma)
     
         edge = cv2.Canny(grey_blur, thrs1, thrs2, apertureSize=CANNY_APERTURE_SIZE, L2gradient=True)
+        
         if SHOW_HOUGHP:
             linesP = cv2.HoughLinesP(edge, rho, theta, threshold, minLineLength = min_len, maxLineGap = max_gap)
             hough = drawHoughPResult(img/2, linesP, EXTEND_LINES = EXTEND_LINES, DRAW_LINES = DRAW_LINES, DRAW_CIRCLES = DRAW_CIRCLES, DRAW_BEST = DRAW_BEST)
@@ -416,8 +430,8 @@ def Tune(img_path):
     
     print "p : toggle between Hough/HoughP"
     print "l : toggle drawing lines"
-    print "c : toggle drawing circles"
-    print "b : toggle drawing vanishing points"
+    print "c : toggle drawing vanishing points"
+    print "b : toggle drawing estimated vanishing point"
     
     update()
     
