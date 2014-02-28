@@ -28,7 +28,7 @@ Lines are found by Hough Transform and Probablistic Hough Transform with below p
 | max_gap   |     5 | HoughP only, maximum gap allowed for a line, smaller ones can filter out noise |
 
 
-Lines shows in green were found by Hough Transform, light blue ones were found by Probablistic Hough Transform. Nearly vertical or horizontal lines are shown in orange in both algorithms.
+Lines show in green were found by Hough Transform, light blue ones were found by Probablistic Hough Transform. Nearly vertical or horizontal lines are shown in orange in both algorithms.
 
 Compared to Hough, HoughP can directly tell where the lines start and where they end. And by providing minimum-length of the line and maximum gap, HoughP could be more rubost than Hough.
 
@@ -53,15 +53,13 @@ Compared to Hough, HoughP can directly tell where the lines start and where they
 
 Vanishing Points
 ----------------
-"Vanishing point" is found by intersecting all potential lines (where vertical and horitonzal lines will not be taken into concideration). All potencial lines should be intersected at the same position: the vanishing point. However, in the real world case, multiple vanishing points will be calculated from one image. The way I used to estimate the real vanishing point is as follow:
+"Vanishing point" is found by intersecting all potential lines (where vertical and horitonzal lines will not be taken into concideration). All potencial lines should be intersected at the same position: the vanishing point. However, in the real world case, multiple vanishing points will be calculated from one image shown in yellow in below images. The way I used to estimate the real vanishing point (shown in red) is as follow:
 
 1. Compute the center of mess of all intersection points as COM1
 2. For each intersection point, compute its distance from to COM1
 3. Filter out bad points whose distance > threshold distance ( 25% thrown )
 4. Re-compute the center of mess of good points as COM2 for optimization as an initial guess
 5. Apply optimization method to find optimal vanishing point v by minimizing the Σ||v-v<sub>i</sub>||<sup>2</sup>
-
-Finally, the estimated vanishing point is shown in red in both algorithms.
 
 | Vanishing points found by using Hough |
 |:-------------------------------------:|
@@ -76,9 +74,9 @@ Finally, the estimated vanishing point is shown in red in both algorithms.
 Code ans Usage
 --------------
 You can find the code in src directory.
-This code provide two ways to use:
+The program provides two ways to use:
 
-1. Directly use: ./hw4.py img_path, will output all the images (Canny Edges, Hough, HoughP, vasnishing poitns, etc)
+1. Directly mode: ./hw4.py img_path, will output all the images (Canny Edges, Hough, HoughP, vasnishing poitns, etc)
 2. Interative mode: ./hw4.py img_path tune, will give you a UI to play with like below
 
 ![Image](/hw4/exp/tune1.jpg?raw=true)
