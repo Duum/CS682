@@ -133,7 +133,8 @@ def line(p1, p2):
     else:
         k = abs(float(A)/B)
         # nearly vertical or horizontal lines are also ignored
-        if k>5 or k < 0.1:
+        # < 8 degree or > 82 degree
+        if k>7.11 or k < 0.15:
             return False
     return A, B, -C
 
@@ -166,14 +167,21 @@ def drawHoughResult(img, lines, DRAW_LINES = True, DRAW_CIRCLES = True, DRAW_BES
         b = np.sin(theta)
         x0 = a*rho
         y0 = b*rho
+        
+        # extends the line segment to entire image
         x1 = int(x0 + max_len*(-b))   
         y1 = int(y0 + max_len*(a))    
         x2 = int(x0 - max_len*(-b))   
         y2 = int(y0 - max_len*(a))
-        if DRAW_LINES: cv2.line(out,(x1,y1),(x2,y2),(0,255,0), 2)
+        
         l = line([x0,y0], [x1,y1])
         if l: ls.append(l)
-    
+        
+        # show lines in different colors
+        if DRAW_LINES: 
+            if l: cv2.line(out,(x1,y1),(x2,y2),(0,255,0), 2)
+            else: cv2.line(out,(x1,y1),(x2,y2),(0,100,255), 2)
+        
     pts = []
     
     for i in range(0, len(ls)):
@@ -204,7 +212,8 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
     for x1,y1,x2,y2 in lines[0]:
         l = line([x1,y1], [x2,y2])
         if l:ls.append(l)
-
+    
+        # extends the line segment to entire image
         if DRAW_LINES and EXTEND_LINES:
             theta = math.atan2(y2-y1, x2-x1)
             a = np.cos(theta)
@@ -213,8 +222,11 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
             y1 = int(y1 + max_len*(b))    
             x2 = int(x1 - 2*max_len*(a))   
             y2 = int(y1 - 2*max_len*(b))
-            
-        if DRAW_LINES: cv2.line(out,(x1,y1),(x2,y2),(255,0,0),2)
+        
+        # show lines in different colors
+        if DRAW_LINES: 
+             if l: cv2.line(out,(x1,y1),(x2,y2),(255,255,0),2)
+             else: cv2.line(out,(x1,y1),(x2,y2),(0,100,255),2)
     
     pts = []
     
@@ -231,6 +243,11 @@ def drawHoughPResult(img, lines, EXTEND_LINES = False, DRAW_LINES = True, DRAW_C
                 
     return out
 
+
+def imwrite(path, img, f=0.5):
+    out = cv2.resize(img, None, None, f, f, interpolation=cv2.INTER_LANCZOS4)
+    cv2.imwrite(path, out)
+
 def main(img_path):
     path, filename = os.path.split(img_path)
     
@@ -240,18 +257,58 @@ def main(img_path):
     img_b = cv2.cvtColor(img_c, cv2.COLOR_BGR2GRAY)
     
     ##########################################
+    # STEP 1 FIND EDGES
+    ##########################################
     edges = Canny(img_b)
-    edge_filename = filename + "_edge.png"
-    cv2.imwrite(edge_filename, edges)
+    edge_filename = filename + "_edge.jpg"
+    imwrite(edge_filename, edges)
     print "saved edges to %s" % edge_filename
     ##########################################
     
     ##########################################
+    # STEP 2.1 FIND LINES WITH HOUGH
+    ##########################################
     lines = HoughLines(edges)
-    hough = drawHoughResult(img_c, lines)
+    hough = drawHoughResult(img_c, lines, DRAW_CIRCLES=False, DRAW_BEST=False)
     hough_filename = filename + "_hough.jpg"
-    cv2.imwrite(hough_filename, hough)
+    imwrite(hough_filename, hough)
     print "saved hough to %s" % hough_filename
+    ##########################################
+
+    ##########################################
+    # STEP 2.2 FIND LINES WITH HOUGHP
+    ##########################################
+    lines = HoughLinesP(edges)
+    houghP = drawHoughPResult(img_c, lines, DRAW_CIRCLES=False, DRAW_BEST=False)
+    houghP_filename = filename + "_houghP.jpg"
+    imwrite(houghP_filename, houghP)
+    print "saved houghP to %s" % houghP_filename
+    
+    # show extended lines
+    houghP = drawHoughPResult(img_c, lines, EXTEND_LINES=True, DRAW_CIRCLES=False, DRAW_BEST=False)
+    houghP_filename = filename + "_houghP_ext.jpg"
+    imwrite(houghP_filename, houghP)
+    print "saved houghP to %s" % houghP_filename
+    ##########################################
+    
+    ##########################################
+    # STEP 3.1 HOUGH INTERSECTIONS & BEST FIT 
+    ##########################################
+    lines = HoughLines(edges)
+    hough = drawHoughResult(img_c, lines, DRAW_CIRCLES=True, DRAW_BEST=True)
+    hough_filename = filename + "_hough_inter.jpg"
+    imwrite(hough_filename, hough)
+    print "saved hough to %s" % hough_filename
+    ##########################################
+    
+    ##########################################
+    # STEP 3.2 HOUGHP INTERSECTIONS & BEST FIT 
+    ##########################################
+    lines = HoughLinesP(edges)
+    houghP = drawHoughPResult(img_c, lines, EXTEND_LINES=True, DRAW_CIRCLES=True, DRAW_BEST=True)
+    houghP_filename = filename + "_houghP_inter.jpg"
+    imwrite(houghP_filename, houghP)
+    print "saved houghP to %s" % houghP_filename
     ##########################################
     
 def Tune(img_path):
@@ -378,15 +435,13 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print 'usage: %s img1 [tune]' % sys.argv[0]
         sys.exit(1)
-    if len(sys.argv) > 1:
-        img_path = sys.argv[1]
-    if len(sys.argv) > 2:
-        type = sys.argv[2]
     
-    if len(sys.argv) == 2:
-        main(img_path)
+    if len(sys.argv) > 1: img_path = sys.argv[1]
+    if len(sys.argv) > 2: type = sys.argv[2]
+    
+    if len(sys.argv) == 2: main(img_path)
     else:
-        if type == "tune": Tune(img_path)
+        if type == "tune": Tune(img_path) 
         else: 
             print 'unknown type %s' % type
             sys.exit(1)
